@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Language Helper</string>
+    <string name="add_term">Add Term</string>
+    <string name="action_import">Import</string>
+</resources>
