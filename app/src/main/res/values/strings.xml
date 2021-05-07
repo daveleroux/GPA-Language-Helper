@@ -2,4 +2,7 @@
     <string name="app_name">Language Helper</string>
     <string name="add_term">Add Term</string>
     <string name="action_import">Import</string>
+    <string name="hint_term">Term...</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Term not saved because it is empty.</string>
 </resources>
