@@ -29,4 +29,7 @@ public class Term {
         this.term = term;
     }
 
+    public Integer getId() {
+        return uid;
+    }
 }

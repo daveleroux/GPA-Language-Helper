@@ -18,8 +18,9 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_TERM_ACTIVITY_REQUEST_CODE = 1;
+    public static final int VIEW_TERM_ACTIVITY_REQUEST_CODE = 2;
 
-    private TermViewModel termViewModel;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        termViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TermViewModel.class);
+        mainViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MainViewModel.class);
 
-        termViewModel.getAllTerms().observe(this, terms -> {
+        mainViewModel.getAllTerms().observe(this, terms -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(terms);
         });
@@ -44,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
         addTermButton.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, NewTermActivity.class);
             startActivityForResult(intent, NEW_TERM_ACTIVITY_REQUEST_CODE);
+        });
+
+
+        adapter.setOnItemClickListener(new TermListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Term term) {
+                // after clicking on item of recycler view
+                // we are opening a new activity and passing
+                // a data to our activity.
+                Intent intent = new Intent(MainActivity.this, ViewTermActivity.class);
+                intent.putExtra(ViewTermActivity.EXTRA_ID, term.getId());
+//                intent.putExtra(NewCourseActivity.EXTRA_COURSE_NAME, term.getCourseName());
+//                intent.putExtra(NewCourseActivity.EXTRA_DESCRIPTION, term.getCourseDescription());
+//                intent.putExtra(NewCourseActivity.EXTRA_DURATION, term.getCourseDuration());
+
+                // below line is to start a new activity and
+                // adding a edit course constant.
+                startActivityForResult(intent, VIEW_TERM_ACTIVITY_REQUEST_CODE);
+            }
         });
 
 //        TextView termView = findViewById(R.id.term_view);
@@ -94,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == NEW_TERM_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Term word = new Term(data.getStringExtra(NewTermActivity.EXTRA_REPLY));
-            termViewModel.insert(word);
+            mainViewModel.insert(word);
         }
 //        else {
 //            Toast.makeText(

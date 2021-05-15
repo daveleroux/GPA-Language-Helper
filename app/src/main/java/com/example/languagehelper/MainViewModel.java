@@ -7,13 +7,13 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class TermViewModel extends AndroidViewModel {
+public class MainViewModel extends AndroidViewModel {
 
     private TermRepository termRepository;
 
     private final LiveData<List<Term>> allTerms;
 
-    public TermViewModel(Application application) {
+    public MainViewModel(Application application) {
         super(application);
         termRepository = new TermRepository(application);
         allTerms = termRepository.getAllTerms();
