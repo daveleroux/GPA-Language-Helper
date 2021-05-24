@@ -13,7 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        ActivityCompat.requestPermissions();
+
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -41,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
             adapter.submitList(terms);
         });
 
-        Button addTermButton = findViewById(R.id.add_term);
+        FloatingActionButton addTermButton = findViewById(R.id.add_term);
         addTermButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, NewTermActivity.class);
+            Intent intent = new Intent(MainActivity.this, EditTermActivity.class);
             startActivityForResult(intent, NEW_TERM_ACTIVITY_REQUEST_CODE);
         });
 
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -105,17 +109,13 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void addTermMessage(View view) {
-        // Do something in response to button
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_TERM_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Term word = new Term(data.getStringExtra(NewTermActivity.EXTRA_REPLY));
-            mainViewModel.insert(word);
-        }
+//        if (requestCode == NEW_TERM_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+//            Term word = new Term(data.getStringExtra(NewTermActivity.EXTRA_REPLY));
+//            mainViewModel.insert(word);
+//        }
 //        else {
 //            Toast.makeText(
 //                    getApplicationContext(),

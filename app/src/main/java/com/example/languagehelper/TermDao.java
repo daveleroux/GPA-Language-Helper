@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -28,4 +29,10 @@ public interface TermDao {
 
     @Delete
     void delete(Term term);
+
+    @Query("SELECT * FROM term WHERE uid = :termId")
+    LiveData<Term> getTerm(Integer termId);
+
+    @Update
+    void updateTerms(Term... users);
 }
